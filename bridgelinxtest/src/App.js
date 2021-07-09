@@ -1,36 +1,29 @@
 import "./App.css";
-import { useState, useEffect } from "react";
-import Movie from "./components/Movie";
-import useFetch from "./hooks/useFetch";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./pages/Home";
+import Movie from "./pages/Movie";
+import { RecoilRoot } from "recoil";
 
 function App() {
-  const [movies, setMovies] = useState([1, 2, 3]);
-  const [pending, setPending] = useState(true);
-
-  const { data, error } = useFetch(
-    "http://www.omdbapi.com/?s=avengers&page=1&apikey=ba273f35"
-  );
-
-  // setMovies(data);
-  // useEffect(() => {
-  //   setMovies(data);
-
-  //   if (data != undefined) {
-  //     setPending(false);
-  //   }
-  // }, [data]);
-
   return (
-    <div className="App">
-      {data != undefined &&
-        data.map((movie) => (
-          <div key={movie.imdbID} id="movie">
-            <img id="poster" src={movie.Poster}></img>
-            <p>{movie.Title}</p>
+    <>
+      <Router>
+        <div className="App">
+          <div className="content">
+            <Switch>
+              <Route exact path="/">
+                {/* <RecoilRoot> */}
+                <Home />
+                {/* </RecoilRoot> */}
+              </Route>
+              <Route path="/movie/:id">
+                <Movie />
+              </Route>
+            </Switch>
           </div>
-        ))}
-      {/* {console.log(data)} */}
-    </div>
+        </div>
+      </Router>
+    </>
   );
 }
 
