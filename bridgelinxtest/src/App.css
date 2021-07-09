@@ -1,11 +1,109 @@
+body {
+  background-color: #242424 !important;
+}
+
 #movie {
   display: inline-block;
   text-align: center;
-  margin: 5px;
+  justify-content: center;
+  /* margin: 0 auto; */
+  width: 40vh;
+  background-color: #5f4b8bff;
+  padding-top: 10px;
+  padding-right: 7px;
+  padding-left: 7px;
+  margin: 2vw;
+  border-radius: 10px;
+  font-family: fantasy;
   /* max-width: 20vw; */
   /* height: 1vh; */
 }
 
+#movie p {
+  /* white-space: nowrap;
+  word-wrap: break-word; */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 19px;
+  text-decoration: underline;
+  color: wheat;
+}
+
 #poster {
-  height: 50vh;
+  width: 30vh;
+  height: 40vh;
+}
+
+#prev {
+  color: wheat;
+  font-family: fantasy;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#next {
+  color: wheat;
+  font-family: fantasy;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#search {
+  margin-top: 3vh;
+}
+
+#searchButton {
+  height: 35px;
+  width: 80px;
+  margin-left: 15px;
+  background-color: #5f4b8bff;
+  color: wheat;
+  border-radius: 5px;
+  font-family: fantasy;
+}
+
+#searchButton:hover {
+  background-color: crimson;
+}
+
+#pagination {
+  margin-bottom: 15px;
+}
+
+#pagination select {
+  height: 37px;
+}
+
+#details {
+  background-color: #5f4b8bff;
+  width: fit-content;
+  display: inline-block;
+  padding-top: 10px;
+  padding-bottom: 25px;
+  margin-top: 5vh;
+  border-radius: 10px;
+}
+
+#details p {
+  color: wheat;
+  font-family: monospace;
+}
+
+#details span {
+  color: lightcoral;
+}
+
+#detailPoster {
+  /* margin-top: 10px; */
+  height: 55vh;
+  width: 40vh;
+}
+
+#movieHeading {
+  color: wheat;
+  margin-top: 10px;
+}
+
+#allDetails {
+  margin-top: 20px;
 }

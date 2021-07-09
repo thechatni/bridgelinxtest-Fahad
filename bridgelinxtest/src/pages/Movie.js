@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Movie = () => {
   const { imdbId } = useParams();
@@ -41,14 +43,46 @@ const Movie = () => {
 
   return (
     <>
-      {!pending && (
-        <div>
-          <p>{movie.Title}</p>
-          <p>{movie.Year}</p>
-          <p>{movie.Type}</p>
-          <img src={movie.Poster}></img>
-        </div>
-      )}
+      {console.log(movie)}
+      <Container>
+        <Row className="justify-content-center">
+          <Col className="d-flex justify-content-center">
+            <h1 id="movieHeading">Movie Details</h1>
+          </Col>
+        </Row>
+        {!pending && (
+          <div id="details">
+            <Row className="justify-content-center" id="allDetails">
+              <Col className="d-flex justify-content-center">
+                <img id="detailPoster" src={movie.Poster}></img>
+              </Col>
+              <Col>
+                <p>
+                  <span id="movieTitle">Title: </span> {movie.Title}
+                </p>
+                <p>
+                  <span>Year: </span> {movie.Year}
+                </p>
+                <p>
+                  <span>Type: </span> {movie.Type}
+                </p>
+                <p>
+                  <span>Language: </span> {movie.Language}
+                </p>
+                <p>
+                  <span>Genre: </span> {movie.Genre}
+                </p>
+                <p>
+                  <span>Plot: </span> {movie.Plot}
+                </p>
+                <p>
+                  <span>Rating: </span> {movie.imdbRating}
+                </p>
+              </Col>
+            </Row>
+          </div>
+        )}
+      </Container>
     </>
   );
 };
