@@ -12,11 +12,9 @@ function App() {
           <div className="content">
             <Switch>
               <Route exact path="/">
-                {/* <RecoilRoot> */}
                 <Home />
-                {/* </RecoilRoot> */}
               </Route>
-              <Route path="/movie/:id">
+              <Route exact path="/movie/:imdbId">
                 <Movie />
               </Route>
             </Switch>

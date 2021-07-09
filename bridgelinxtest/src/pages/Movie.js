@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 const Movie = () => {
-  const { id } = useParams();
+  const { imdbId } = useParams();
   const [movie, setMovie] = useState();
+  const [pending, setPending] = useState(true);
   const [error, setError] = useState(false);
 
   const makeFetch = (url) => {
@@ -14,11 +15,12 @@ const Movie = () => {
       method: "GET",
     })
       .then((res) => {
+        // console.log(res);
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        setMovie(data.Search);
+        // console.log(data);
+        setMovie(data);
       })
       .catch((err) => {
         if ((err.name = "AbortError")) {
@@ -31,19 +33,22 @@ const Movie = () => {
   };
 
   useEffect(() => {
-    // makeFetch(`http://www.omdbapi.com/?i=${id}&apikey=ba273f35`);
-  }, []);
+    makeFetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`);
+    if (movie != undefined) {
+      setPending(false);
+    }
+  }, [movie]);
 
   return (
     <>
-      {/* {movie != undefined && (
+      {!pending && (
         <div>
           <p>{movie.Title}</p>
           <p>{movie.Year}</p>
           <p>{movie.Type}</p>
           <img src={movie.Poster}></img>
         </div>
-      )} */}
+      )}
     </>
   );
 };

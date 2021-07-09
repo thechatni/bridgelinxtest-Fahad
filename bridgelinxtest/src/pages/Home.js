@@ -31,9 +31,8 @@ const Home = () => {
   };
 
   const paginate = (limit) => {
-    console.log(limit);
-    for (var k = 1; k <= pageNumbers.length; k++) {
-      pageNumbers.pop();
+    for (var k = 0; k < limit; k++) {
+      pageNumbers.pop(k);
     }
     for (var i = 1; i <= limit; i++) {
       pageNumbers.push(i);
@@ -53,6 +52,7 @@ const Home = () => {
       .then((data) => {
         setData(data.Search);
         setTotal(Math.ceil(data.totalResults / 10));
+        paginate(Math.ceil(data.totalResults / 10));
       })
       .catch((err) => {
         if ((err.name = "AbortError")) {
@@ -68,7 +68,6 @@ const Home = () => {
       `http://www.omdbapi.com/?s=${search}&page=${page}&apikey=ba273f35`
     );
     setCur(page);
-    paginate(total);
   }, [search, page, total]);
 
   return (
@@ -85,18 +84,18 @@ const Home = () => {
       {data != undefined &&
         data.map((movie) => (
           <div key={movie.imdbID} id="movie">
-            {/* <Link to={`/movie/${movie.imdbID}`}> */}
-            <img id="poster" src={movie.Poster}></img>
-            <p>{movie.Title}</p>
-            {/* </Link> */}
+            <Link to={`/movie/${movie.imdbID}`}>
+              <img id="poster" src={movie.Poster}></img>
+              <p>{movie.Title}</p>
+            </Link>
           </div>
         ))}
       {page > 1 && <div onClick={prevPage}>Previous</div>}
-      {/* <select value={cur} onChange={(e) => setPage(e.target.value)}>
+      <select value={cur} onChange={(e) => setPage(e.target.value)}>
         {pageNumbers.map((item) => (
           <option key={item}>{item}</option>
         ))}
-      </select> */}
+      </select>
       {page < total && <div onClick={nextPage}>Next</div>}
       {/* {console.log(data)} */}
     </div>
