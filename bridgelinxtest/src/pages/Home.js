@@ -12,19 +12,22 @@ const Home = () => {
   const [total, setTotal] = useState();
   const [input, setInput] = useState("");
   const [data, setData] = useState();
+  const [start, setStart] = useState(true);
   const [search, setSearch] = useState("Avengers");
   const [error, setError] = useState(false);
   const [pageNumbers, setPageNumbers] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    // setStart(true);
     setSearch(input);
+    setPage(1);
+    // console.log("submit pressed");
   };
 
   const nextPage = () => {
     console.log("next");
-    setPage((page) => page + 1);
+    setPage((page) => eval(page) + eval(1));
   };
 
   const prevPage = () => {
@@ -32,13 +35,13 @@ const Home = () => {
     setPage((page) => page - 1);
   };
 
-  const paginate = (limit) => {
-    for (var k = 0; k < limit; k++) {
-      pageNumbers.pop(k);
+  const paginate = () => {
+    var arr = [];
+    console.log(total);
+    for (let i = 1; i <= total; i++) {
+      arr[i - 1] = i;
     }
-    for (var i = 1; i <= limit; i++) {
-      pageNumbers.push(i);
-    }
+    setPageNumbers(arr);
   };
   const makeFetch = (url) => {
     console.log(page);
@@ -54,7 +57,6 @@ const Home = () => {
       .then((data) => {
         setData(data.Search);
         setTotal(Math.ceil(data.totalResults / 10));
-        paginate(Math.ceil(data.totalResults / 10));
       })
       .catch((err) => {
         if ((err.name = "AbortError")) {
@@ -62,10 +64,14 @@ const Home = () => {
           setError(true);
         }
       });
-
+    setStart(false);
     return () => abortCont.abort();
   };
   useEffect(() => {
+    // if (start) {
+    if (total != undefined) {
+      paginate();
+    }
     makeFetch(
       `http://www.omdbapi.com/?s=${search}&page=${page}&apikey=ba273f35`
     );
@@ -75,6 +81,7 @@ const Home = () => {
       left: 0,
       behavior: "smooth",
     });
+    // }
   }, [search, page, total]);
 
   return (
