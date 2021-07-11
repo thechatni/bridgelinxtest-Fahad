@@ -14,6 +14,7 @@ const Movie = () => {
   const [error, setError] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [ready, setReady] = useState(false);
+  const [start, setStart] = useState(true);
 
   // var CancelToken = axios.CancelToken;
   // var cancel;
@@ -96,28 +97,32 @@ const Movie = () => {
 
     // makeFetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`, abortCont);
 
-    fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`, {
-      signal: abortCont.signal,
-      method: "GET",
-    })
-      .then((res) => {
-        // console.log(res);
+    if (start) {
+      fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`, {
+        signal: abortCont.signal,
+        method: "GET",
+      })
+        .then((res) => {
+          // console.log(res);
 
-        return res.json();
-      })
-      .then((data) => {
-        // console.log(data);
-        setMovie(data);
-      })
-      .catch((err) => {
-        console.log(err.name);
-        if (err.name == "AbortError") {
-          console.log("Fetch aborted");
-        } else {
-          setError(true);
-          // console.log("Aint it");
-        }
-      });
+          return res.json();
+        })
+        .then((data) => {
+          // console.log(data);
+          setMovie(data);
+        })
+        .catch((err) => {
+          console.log(err.name);
+          if (err.name == "AbortError") {
+            console.log("Fetch aborted");
+          } else {
+            setError(true);
+            // console.log("Aint it");
+          }
+        });
+      setStart(false);
+    }
+
     return () => abortCont.abort();
   }, [movie]);
 

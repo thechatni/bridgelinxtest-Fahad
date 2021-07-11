@@ -21,7 +21,6 @@ const Home = () => {
     e.preventDefault();
     setSearch(input);
     setPage(1);
-
   };
 
   const nextPage = () => {
@@ -118,7 +117,7 @@ const Home = () => {
                 style={{
                   color: "wheat",
                   textAlign: "center",
-                  fontFamily: "fantasy",
+                  fontFamily: "'Anton', sans-serif",
                   marginTop: "30px",
                 }}
               >
@@ -131,7 +130,7 @@ const Home = () => {
                 style={{
                   color: "crimson",
                   textAlign: "center",
-                  fontFamily: "fantasy",
+                  fontFamily: "'Anton', sans-serif",
                   marginTop: "30px",
                 }}
               >
@@ -144,7 +143,7 @@ const Home = () => {
                 style={{
                   color: "coral",
                   textAlign: "center",
-                  fontFamily: "fantasy",
+                  fontFamily: "'Anton', sans-serif",
                   marginTop: "30px",
                 }}
               >

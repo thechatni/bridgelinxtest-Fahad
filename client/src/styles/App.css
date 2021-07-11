@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
 body {
   background-color: #242424 !important;
 }
@@ -14,7 +16,8 @@ body {
   padding-left: 7px;
   margin: 2vw;
   border-radius: 10px;
-  font-family: fantasy;
+
+  font-family: "Anton", sans-serif;
   /* max-width: 20vw; */
   /* height: 1vh; */
 }
@@ -43,7 +46,8 @@ body {
 
 #prev {
   color: wheat;
-  font-family: fantasy;
+
+  font-family: "Anton", sans-serif;
   margin-right: 30px;
   cursor: pointer;
 }
@@ -54,7 +58,7 @@ body {
 
 #next {
   color: wheat;
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
   margin-left: 30px;
   cursor: pointer;
 }
@@ -82,7 +86,7 @@ body {
   background-color: #5f4b8bff;
   color: wheat;
   border-radius: 5px;
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
 }
 
 #searchButton:hover {
@@ -97,7 +101,8 @@ body {
 
 #pagination select {
   height: 30px;
-  font-family: fantasy;
+
+  font-family: "Anton", sans-serif;
   background-color: #5f4b8bff;
   color: wheat;
 }
@@ -130,11 +135,12 @@ body {
 #movieHeading {
   color: wheat;
   margin-top: 10px;
-  font-family: fantasy;
+
+  font-family: "Anton", sans-serif;
 }
 
 #create h1 {
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
   margin-bottom: 30px;
 }
 
@@ -143,7 +149,7 @@ body {
 }
 
 #allReviews h1 {
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
   color: wheat;
 }
 
@@ -173,7 +179,8 @@ body {
   font-size: 20px;
   text-decoration: none;
   margin: 5px;
-  font-family: fantasy;
+
+  font-family: "Anton", sans-serif;
 }
 
 #mainBar a:hover {
@@ -200,7 +207,8 @@ body {
   margin-top: 10px;
   margin-left: 5vw;
   color: wheat;
-  font-family: fantasy;
+
+  font-family: "Anton", sans-serif;
 }
 
 #logo-text {
@@ -216,7 +224,7 @@ body {
 }
 
 input[type="text"] {
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
 }
 
 svg {
@@ -229,7 +237,7 @@ svg:hover {
 
 #subReview {
   background-color: coral;
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
   color: wheat;
 
   justify-content: center;
@@ -242,7 +250,7 @@ svg:hover {
 
 .form-group {
   color: wheat;
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
 }
 
 #radio {
@@ -260,7 +268,7 @@ svg:hover {
 }
 
 #reviewCard {
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
   margin-bottom: 30px;
 }
 
@@ -269,5 +277,5 @@ svg:hover {
   justify-content: center;
   margin-top: 25vh;
   color: wheat;
-  font-family: fantasy;
+  font-family: "Anton", sans-serif;
 }
