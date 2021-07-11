@@ -26,7 +26,7 @@ body {
   overflow: hidden;
   font-size: 19px;
   text-decoration: underline;
-  color: wheat;
+  color: lightcoral;
 }
 
 #poster {
@@ -37,15 +37,23 @@ body {
 #prev {
   color: wheat;
   font-family: fantasy;
-  margin: 10px;
+  margin-right: 30px;
   cursor: pointer;
+}
+
+#prev:hover {
+  color: coral;
 }
 
 #next {
   color: wheat;
   font-family: fantasy;
-  margin: 10px;
+  margin-left: 30px;
   cursor: pointer;
+}
+
+#next:hover {
+  color: coral;
 }
 
 #search {
@@ -63,7 +71,8 @@ body {
 }
 
 #searchButton:hover {
-  background-color: crimson;
+  background-color: coral;
+  color: #242424;
 }
 
 #pagination {
@@ -71,7 +80,8 @@ body {
 }
 
 #pagination select {
-  height: 37px;
+  height: 30px;
+  font-family: fantasy;
 }
 
 #details {
@@ -102,8 +112,88 @@ body {
 #movieHeading {
   color: wheat;
   margin-top: 10px;
+  font-family: fantasy;
+}
+
+#create h1 {
+  font-family: fantasy;
+}
+
+#allReviews h1 {
+  font-family: fantasy;
 }
 
 #allDetails {
   margin-top: 20px;
+}
+
+#allReviews h1 {
+  color: wheat;
+}
+
+#create {
+  margin-top: 15px;
+}
+
+#create h1 {
+  color: wheat;
+}
+
+#headings {
+  color: coral;
+}
+
+#movieInfo {
+  margin: 15px;
+}
+
+#mainBar a {
+  color: wheat;
+  font-size: 3vh;
+  text-decoration: none;
+  margin: 5px;
+  font-family: fantasy;
+}
+
+#mainBar a:hover {
+  color: coral;
+}
+
+#mainLogo {
+  margin-left: 5vh;
+  margin-top: 0;
+}
+
+#barItems {
+  margin-left: auto;
+  padding-right: 50px;
+  font-size: 15px;
+}
+
+#coll {
+  text-align: center;
+}
+
+#mainBar h2 {
+  font-size: 35px;
+  margin-top: 10px;
+  margin-left: 8vw;
+  color: wheat;
+  font-family: fantasy;
+}
+
+#logo-text {
+  margin: 0 auto;
+}
+
+.logoBack {
+  cursor: pointer;
+}
+
+#none {
+  color: coral;
+}
+
+input[type="text"] {
+  font-family: Arial, Helvetica, sans-serif;
 }

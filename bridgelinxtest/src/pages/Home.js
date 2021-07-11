@@ -3,6 +3,7 @@ import useFetch from "../hooks/useFetch";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Nav-bar";
 
 const Home = () => {
   const [movies, setMovies] = useState([1, 2, 3]);
@@ -68,7 +69,6 @@ const Home = () => {
     return () => abortCont.abort();
   };
   useEffect(() => {
-    // if (start) {
     if (total != undefined) {
       paginate();
     }
@@ -81,68 +81,70 @@ const Home = () => {
       left: 0,
       behavior: "smooth",
     });
-    // }
   }, [search, page, total]);
 
   return (
-    <div className="App">
-      <Container>
-        <Row className="justify-content-center" id="search">
-          <Col className="col-12 d-flex justify-content-center">
-            <form onSubmit={handleSubmit}>
-              <input
-                id="searchInput"
-                type="text"
-                value={input}
-                placeholder="Enter title"
-                onChange={(e) => setInput(e.target.value)}
-              ></input>
-              <button id="searchButton" type="submit">
-                Search
-              </button>
-            </form>
-          </Col>
-        </Row>
-        <Row className="justify-content-center" id="results">
-          {data != undefined &&
-            data.map((movie) => (
-              <Col
-                className="col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center"
-                key={movie.imdbID}
-              >
-                <div id="movie">
-                  <Link to={`/movie/${movie.imdbID}`}>
-                    {(movie.Poster === "N/A" && (
-                      <img id="poster" src="noimage.png"></img>
-                    )) || <img id="poster" src={movie.Poster}></img>}
+    <>
+      <Navbar back={false} />
+      <div className="App">
+        <Container>
+          <Row className="justify-content-center" id="search">
+            <Col className="col-12 d-flex justify-content-center">
+              <form onSubmit={handleSubmit}>
+                <input
+                  id="searchInput"
+                  type="text"
+                  value={input}
+                  placeholder="Enter title"
+                  onChange={(e) => setInput(e.target.value)}
+                ></input>
+                <button id="searchButton" type="submit">
+                  Search
+                </button>
+              </form>
+            </Col>
+          </Row>
+          <Row className="justify-content-center" id="results">
+            {data != undefined &&
+              data.map((movie) => (
+                <Col
+                  className="col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center"
+                  key={movie.imdbID}
+                >
+                  <div id="movie">
+                    <Link to={`/movie/${movie.imdbID}`}>
+                      {(movie.Poster === "N/A" && (
+                        <img id="poster" src="noimage.png"></img>
+                      )) || <img id="poster" src={movie.Poster}></img>}
 
-                    <p>{movie.Title}</p>
-                  </Link>
-                </div>
-              </Col>
-            ))}
-        </Row>
-        <Row className="justify-content-center" id="pagination">
-          <Col className="col-12 d-flex justify-content-center">
-            {page > 1 && (
-              <p id="prev" onClick={prevPage}>
-                Previous
-              </p>
-            )}
-            <select value={cur} onChange={(e) => setPage(e.target.value)}>
-              {pageNumbers.map((item) => (
-                <option key={item}>{item}</option>
+                      <p>{movie.Title}</p>
+                    </Link>
+                  </div>
+                </Col>
               ))}
-            </select>
-            {page < total && (
-              <p id="next" onClick={nextPage}>
-                Next
-              </p>
-            )}
-          </Col>
-        </Row>
-      </Container>
-    </div>
+          </Row>
+          <Row className="justify-content-center" id="pagination">
+            <Col className="col-12 d-flex justify-content-center">
+              {page > 1 && (
+                <p id="prev" onClick={prevPage}>
+                  Previous
+                </p>
+              )}
+              <select value={cur} onChange={(e) => setPage(e.target.value)}>
+                {pageNumbers.map((item) => (
+                  <option key={item}>{item}</option>
+                ))}
+              </select>
+              {page < total && (
+                <p id="next" onClick={nextPage}>
+                  Next
+                </p>
+              )}
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </>
   );
 };
 

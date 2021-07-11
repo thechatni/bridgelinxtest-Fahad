@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CreateReview from "../components/CreateReview";
+import Navbar from "../components/Nav-bar";
 
 const Movie = () => {
   const { imdbId } = useParams();
   const [movie, setMovie] = useState();
   const [pending, setPending] = useState(true);
   const [error, setError] = useState(false);
-
+  const [reviews, setReviews] = useState([]);
+  const [ready, setReady] = useState(false);
   const makeFetch = (url) => {
     const abortCont = new AbortController();
 
@@ -39,11 +43,22 @@ const Movie = () => {
     if (movie != undefined) {
       setPending(false);
     }
+    axios
+      .get(`http://localhost:5000/reviews/movie/${imdbId}`)
+      .then((response) => {
+        // console.log(response.data);
+        setReviews(response.data);
+        setReady(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [movie]);
 
   return (
     <>
-      {console.log(movie)}
+      {/* {console.log(movie)} */}
+      <Navbar back={true} />
       <Container>
         <Row className="justify-content-center">
           <Col className="d-flex justify-content-center">
@@ -56,7 +71,7 @@ const Movie = () => {
               <Col className="d-flex justify-content-center">
                 <img id="detailPoster" src={movie.Poster}></img>
               </Col>
-              <Col>
+              <Col id="movieInfo">
                 <p>
                   <span id="movieTitle">Title: </span> {movie.Title}
                 </p>
@@ -82,6 +97,35 @@ const Movie = () => {
             </Row>
           </div>
         )}
+        <CreateReview imdbId={imdbId} />
+        <div id="allReviews">
+          <h1 className="text-center">All Reviews for this title</h1>
+          <Row className="justify-content-around">
+            {reviews.length === 0 && <p id="none">No reviews found.</p>}
+            {ready &&
+              reviews.map((review) => (
+                <Col
+                  key={review._id}
+                  className="col-md-4 col-sm-6 col-xs-12 mt-5"
+                >
+                  <Card id="chillingCard">
+                    <Card.Body>
+                      <Card.Text>
+                        <span id="headings">Name:</span> {review.name}
+                      </Card.Text>
+                      <Card.Text>
+                        <span id="headings">Rating:</span> {review.number}
+                      </Card.Text>
+                      <Card.Text>
+                        <span id="headings">Description:</span>{" "}
+                        {review.description}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+          </Row>
+        </div>
       </Container>
     </>
   );
