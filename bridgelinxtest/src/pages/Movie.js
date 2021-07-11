@@ -65,7 +65,7 @@ const Movie = () => {
             <h1 id="movieHeading">Movie Details</h1>
           </Col>
         </Row>
-        {!pending && (
+        {(!pending && (
           <div id="details">
             <Row className="justify-content-center" id="allDetails">
               <Col className="d-flex justify-content-center">
@@ -96,36 +96,61 @@ const Movie = () => {
               </Col>
             </Row>
           </div>
+        )) || (
+          <h1
+            style={{
+              color: "wheat",
+              textAlign: "center",
+              fontFamily: "fantasy",
+              marginTop: "30px",
+            }}
+          >
+            Loading
+          </h1>
         )}
-        <CreateReview imdbId={imdbId} />
-        <div id="allReviews">
-          <h1 className="text-center">All Reviews for this title</h1>
-          <Row className="justify-content-around">
-            {reviews.length === 0 && <p id="none">No reviews found.</p>}
-            {ready &&
-              reviews.map((review) => (
-                <Col
-                  key={review._id}
-                  className="col-md-4 col-sm-6 col-xs-12 mt-5"
-                >
-                  <Card id="chillingCard">
-                    <Card.Body>
-                      <Card.Text>
-                        <span id="headings">Name:</span> {review.name}
-                      </Card.Text>
-                      <Card.Text>
-                        <span id="headings">Rating:</span> {review.number}
-                      </Card.Text>
-                      <Card.Text>
-                        <span id="headings">Description:</span>{" "}
-                        {review.description}
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-          </Row>
-        </div>
+        {!pending && <CreateReview imdbId={imdbId} />}
+
+        {(ready && !pending && (
+          <div id="allReviews">
+            <h1 className="text-center">All Reviews for this title</h1>
+            <Row className="justify-content-around">
+              {reviews.length === 0 && <p id="none">No reviews found.</p>}
+              {ready &&
+                reviews.map((review) => (
+                  <Col
+                    key={review._id}
+                    className="col-md-4 col-sm-6 col-xs-12 mt-5"
+                  >
+                    <Card id="reviewCard">
+                      <Card.Body>
+                        <Card.Text>
+                          <span id="headings">Name:</span> {review.name}
+                        </Card.Text>
+                        <Card.Text>
+                          <span id="headings">Rating:</span> {review.number}
+                        </Card.Text>
+                        <Card.Text>
+                          <span id="headings">Description:</span>{" "}
+                          {review.description}
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+            </Row>
+          </div>
+        )) || (
+          <h1
+            style={{
+              color: "wheat",
+              textAlign: "center",
+              fontFamily: "fantasy",
+              marginTop: "30px",
+            }}
+          >
+            Loading Reviews
+          </h1>
+        )}
       </Container>
     </>
   );

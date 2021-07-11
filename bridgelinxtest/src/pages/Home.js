@@ -58,6 +58,7 @@ const Home = () => {
       .then((data) => {
         setData(data.Search);
         setTotal(Math.ceil(data.totalResults / 10));
+        setPending(false);
       })
       .catch((err) => {
         if ((err.name = "AbortError")) {
@@ -105,7 +106,7 @@ const Home = () => {
             </Col>
           </Row>
           <Row className="justify-content-center" id="results">
-            {data != undefined &&
+            {(!pending &&
               data.map((movie) => (
                 <Col
                   className="col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center"
@@ -121,27 +122,40 @@ const Home = () => {
                     </Link>
                   </div>
                 </Col>
-              ))}
+              ))) || (
+              <h1
+                style={{
+                  color: "wheat",
+                  textAlign: "center",
+                  fontFamily: "fantasy",
+                  marginTop: "30px",
+                }}
+              >
+                Loading
+              </h1>
+            )}
           </Row>
-          <Row className="justify-content-center" id="pagination">
-            <Col className="col-12 d-flex justify-content-center">
-              {page > 1 && (
-                <p id="prev" onClick={prevPage}>
-                  Previous
-                </p>
-              )}
-              <select value={cur} onChange={(e) => setPage(e.target.value)}>
-                {pageNumbers.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </select>
-              {page < total && (
-                <p id="next" onClick={nextPage}>
-                  Next
-                </p>
-              )}
-            </Col>
-          </Row>
+          {!pending && (
+            <Row className="justify-content-center" id="pagination">
+              <Col className="col-12 d-flex justify-content-center">
+                {page > 1 && (
+                  <p id="prev" onClick={prevPage}>
+                    Previous
+                  </p>
+                )}
+                <select value={cur} onChange={(e) => setPage(e.target.value)}>
+                  {pageNumbers.map((item) => (
+                    <option key={item}>{item}</option>
+                  ))}
+                </select>
+                {page < total && (
+                  <p id="next" onClick={nextPage}>
+                    Next
+                  </p>
+                )}
+              </Col>
+            </Row>
+          )}
         </Container>
       </div>
     </>

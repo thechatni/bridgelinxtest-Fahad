@@ -26,7 +26,14 @@ body {
   overflow: hidden;
   font-size: 19px;
   text-decoration: underline;
-  color: lightcoral;
+  color: coral;
+}
+
+#movie:hover {
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transform: scale(1.1);
+  border: 3px solid coral;
 }
 
 #poster {
@@ -58,8 +65,16 @@ body {
 
 #search {
   margin-top: 3vh;
+  background-color: wheat;
+  padding: 15px;
+  border-radius: 10px;
 }
 
+#searchInput {
+  color: #5f4b8bff;
+  border-radius: 5px;
+  height: 35px;
+}
 #searchButton {
   height: 35px;
   width: 80px;
@@ -77,11 +92,14 @@ body {
 
 #pagination {
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 #pagination select {
   height: 30px;
   font-family: fantasy;
+  background-color: #5f4b8bff;
+  color: wheat;
 }
 
 #details {
@@ -119,20 +137,22 @@ body {
   font-family: fantasy;
 }
 
+#allReviews {
+  margin-top: 25px;
+}
+
 #allReviews h1 {
   font-family: fantasy;
+  color: wheat;
 }
 
 #allDetails {
   margin-top: 20px;
 }
 
-#allReviews h1 {
-  color: wheat;
-}
-
 #create {
-  margin-top: 15px;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 #create h1 {
@@ -166,7 +186,7 @@ body {
 
 #barItems {
   margin-left: auto;
-  padding-right: 50px;
+  padding-right: 60px;
   font-size: 15px;
 }
 
@@ -177,7 +197,7 @@ body {
 #mainBar h2 {
   font-size: 35px;
   margin-top: 10px;
-  margin-left: 8vw;
+  margin-left: 5vw;
   color: wheat;
   font-family: fantasy;
 }
@@ -195,5 +215,50 @@ body {
 }
 
 input[type="text"] {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: fantasy;
+}
+
+svg {
+  fill: wheat;
+}
+
+svg:hover {
+  fill: coral;
+}
+
+#subReview {
+  background-color: coral;
+  font-family: fantasy;
+  color: wheat;
+
+  justify-content: center;
+}
+
+#subReview:hover {
+  background-color: wheat;
+  color: #242424;
+}
+
+.form-group {
+  color: wheat;
+  font-family: fantasy;
+}
+
+#radio {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#radio input {
+  margin-left: 20px;
+}
+
+#rating {
+  display: inline-block;
+}
+
+#reviewCard {
+  font-family: fantasy;
+  margin-bottom: 30px;
 }
