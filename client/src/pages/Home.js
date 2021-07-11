@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import useFetch from "../hooks/useFetch";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
@@ -20,10 +19,9 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setStart(true);
     setSearch(input);
     setPage(1);
-    // console.log("submit pressed");
+
   };
 
   const nextPage = () => {
@@ -44,44 +42,53 @@ const Home = () => {
     }
     setPageNumbers(arr);
   };
-  const makeFetch = (url) => {
+  const makeFetch = (url, abortCont) => {
     console.log(page);
-    const abortCont = new AbortController();
-
+    let unmount = false;
     fetch(url, {
       signal: abortCont.signal,
       method: "GET",
     })
       .then((res) => {
-        return res.json();
+        if (!unmount) {
+          return res.json();
+        }
       })
       .then((data) => {
         setData(data.Search);
         setTotal(Math.ceil(data.totalResults / 10));
         setPending(false);
+        setError(false);
       })
       .catch((err) => {
         if ((err.name = "AbortError")) {
           console.log("Fetch aborted");
           setError(true);
+          setPending(false);
         }
       });
     setStart(false);
-    return () => abortCont.abort();
   };
+
   useEffect(() => {
     if (total != undefined) {
       paginate();
     }
-    makeFetch(
-      `http://www.omdbapi.com/?s=${search}&page=${page}&apikey=ba273f35`
-    );
+
     setCur(page);
     window.scroll({
       top: 0,
       left: 0,
       behavior: "smooth",
     });
+
+    const abortCont = new AbortController();
+    makeFetch(
+      `http://www.omdbapi.com/?s=${search}&page=${page}&apikey=ba273f35`,
+      abortCont
+    );
+
+    return () => abortCont.abort();
   }, [search, page, total]);
 
   return (
@@ -106,7 +113,48 @@ const Home = () => {
             </Col>
           </Row>
           <Row className="justify-content-center" id="results">
-            {(!pending &&
+            {pending && (
+              <h1
+                style={{
+                  color: "wheat",
+                  textAlign: "center",
+                  fontFamily: "fantasy",
+                  marginTop: "30px",
+                }}
+              >
+                Loading
+              </h1>
+            )}
+
+            {error && (
+              <h1
+                style={{
+                  color: "crimson",
+                  textAlign: "center",
+                  fontFamily: "fantasy",
+                  marginTop: "30px",
+                }}
+              >
+                An error occured while fetching data.
+              </h1>
+            )}
+
+            {data === undefined && !error && (
+              <h1
+                style={{
+                  color: "coral",
+                  textAlign: "center",
+                  fontFamily: "fantasy",
+                  marginTop: "30px",
+                }}
+              >
+                No movies found with entered title.
+              </h1>
+            )}
+
+            {!pending &&
+              !error &&
+              data != undefined &&
               data.map((movie) => (
                 <Col
                   className="col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center"
@@ -122,20 +170,9 @@ const Home = () => {
                     </Link>
                   </div>
                 </Col>
-              ))) || (
-              <h1
-                style={{
-                  color: "wheat",
-                  textAlign: "center",
-                  fontFamily: "fantasy",
-                  marginTop: "30px",
-                }}
-              >
-                Loading
-              </h1>
-            )}
+              ))}
           </Row>
-          {!pending && (
+          {!pending && !error && data != undefined && (
             <Row className="justify-content-center" id="pagination">
               <Col className="col-12 d-flex justify-content-center">
                 {page > 1 && (

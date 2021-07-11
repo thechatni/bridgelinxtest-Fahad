@@ -45,7 +45,7 @@ const CreateReview = (props) => {
   return (
     <div id="create">
       <Container>
-        <h1 className="text-center">Add Review for this title</h1>
+        <h1 className="text-center">Add your review</h1>
 
         <Form id="reviewForm" onSubmit={handleSubmit}>
           <Row>

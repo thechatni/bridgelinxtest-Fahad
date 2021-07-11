@@ -135,6 +135,7 @@ body {
 
 #create h1 {
   font-family: fantasy;
+  margin-bottom: 30px;
 }
 
 #allReviews {
@@ -169,7 +170,7 @@ body {
 
 #mainBar a {
   color: wheat;
-  font-size: 3vh;
+  font-size: 20px;
   text-decoration: none;
   margin: 5px;
   font-family: fantasy;
@@ -261,4 +262,12 @@ svg:hover {
 #reviewCard {
   font-family: fantasy;
   margin-bottom: 30px;
+}
+
+#not-found {
+  text-align: center;
+  justify-content: center;
+  margin-top: 25vh;
+  color: wheat;
+  font-family: fantasy;
 }

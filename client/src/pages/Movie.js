@@ -5,6 +5,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CreateReview from "../components/CreateReview";
 import Navbar from "../components/Nav-bar";
+import { constSelector } from "recoil";
 
 const Movie = () => {
   const { imdbId } = useParams();
@@ -13,15 +14,95 @@ const Movie = () => {
   const [error, setError] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [ready, setReady] = useState(false);
-  const makeFetch = (url) => {
-    const abortCont = new AbortController();
 
+  // var CancelToken = axios.CancelToken;
+  // var cancel;
+  // const [cancelToken, setCancelToken] = useState();
+  const makeFetch = (url, abortCont) => {
+    let unmount = false;
     fetch(url, {
       signal: abortCont.signal,
       method: "GET",
     })
       .then((res) => {
         // console.log(res);
+        if (!unmount) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        // console.log(data);
+        setMovie(data);
+      })
+      .catch((err) => {
+        console.log(err.name);
+        if (error.name === "AbortError") {
+          console.log("Fetch aborted");
+        } else {
+          // setError(true);
+          console.log("Aint it");
+        }
+      });
+  };
+
+  useEffect(() => {
+    let cancelToken;
+    if (movie != undefined) {
+      setPending(false);
+    }
+    const abortCont = new AbortController();
+    if (typeof cancelToken != typeof undefined) {
+      cancelToken.cancel("Canceling the previous req");
+    }
+
+    cancelToken = axios.CancelToken.source();
+
+    // if (cancel != undefined) {
+    //   cancel();
+    // }
+    axios
+      .get(`http://localhost:5000/reviews/movie/${imdbId}`, {
+        cancelToken: cancelToken.token,
+        // cancelToken: new CancelToken(function executor(c) {
+        //   // An executor function receives a cancel function as a parameter
+        //   cancel = c;
+        // }),
+      })
+      .then((response) => {
+        // console.log(response);
+        // if (cancel != undefined) {
+        //   console.log("Error in fetching");
+        // } else {
+        setReviews(response.data);
+        setReady(true);
+        // }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // fetch(`http://localhost:5000/reviews/movie/${imdbId}`, {
+    //   signal: abortCont.signal,
+    //   method: "GET",
+    // })
+    //   .then((response) => {
+    //     // console.log(response.data);
+    //     setReviews(response.data);
+    //     setReady(true);
+    //   })
+    //   .catch((error) => {
+    //     // console.log(error);
+    //   });
+
+    // makeFetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`, abortCont);
+
+    fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`, {
+      signal: abortCont.signal,
+      method: "GET",
+    })
+      .then((res) => {
+        // console.log(res);
+
         return res.json();
       })
       .then((data) => {
@@ -29,30 +110,15 @@ const Movie = () => {
         setMovie(data);
       })
       .catch((err) => {
-        if ((err.name = "AbortError")) {
+        console.log(err.name);
+        if (err.name == "AbortError") {
           console.log("Fetch aborted");
+        } else {
           setError(true);
+          // console.log("Aint it");
         }
       });
-
     return () => abortCont.abort();
-  };
-
-  useEffect(() => {
-    makeFetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`);
-    if (movie != undefined) {
-      setPending(false);
-    }
-    axios
-      .get(`http://localhost:5000/reviews/movie/${imdbId}`)
-      .then((response) => {
-        // console.log(response.data);
-        setReviews(response.data);
-        setReady(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }, [movie]);
 
   return (
@@ -99,7 +165,7 @@ const Movie = () => {
         )) || (
           <h1
             style={{
-              color: "wheat",
+              color: "coral",
               textAlign: "center",
               fontFamily: "fantasy",
               marginTop: "30px",
@@ -142,7 +208,7 @@ const Movie = () => {
         )) || (
           <h1
             style={{
-              color: "wheat",
+              color: "coral",
               textAlign: "center",
               fontFamily: "fantasy",
               marginTop: "30px",

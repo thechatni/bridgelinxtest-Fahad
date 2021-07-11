@@ -33,8 +33,8 @@ const Contact = () => {
           </div>
           <h2>GITHUB Link:</h2>
           <p>
-            <a href="https://github.com/thechatni/NetflixAndChill">
-              https://github.com/thechatni/NetflixAndChill
+            <a href="https://github.com/thechatni/bridgelinxtest-Fahad">
+              https://github.com/thechatni/bridgelinxtest-Fahad
             </a>
           </p>
         </div>

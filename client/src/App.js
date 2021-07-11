@@ -1,8 +1,9 @@
-import "./App.css";
+import "./styles/App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Movie from "./pages/Movie";
 import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 import { RecoilRoot } from "recoil";
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
               </Route>
               <Route path="/contact">
                 <Contact />
+              </Route>
+              <Route path="*">
+                <NotFound />
               </Route>
             </Switch>
           </div>

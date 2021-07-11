@@ -26,7 +26,7 @@ const Navbr = (props) => {
         <Navbar.Collapse id="coll">
           <Nav id="barItems">
             <Link to="/">Home</Link>
-            <Link to="/contact">Contact</Link>
+            <Link to="/contact">About</Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
