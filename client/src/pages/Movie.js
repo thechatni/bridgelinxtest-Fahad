@@ -5,97 +5,31 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CreateReview from "../components/CreateReview";
 import Navbar from "../components/Nav-bar";
-import { constSelector } from "recoil";
 
 const Movie = () => {
   const { imdbId } = useParams();
   const [movie, setMovie] = useState();
   const [pending, setPending] = useState(true);
-  const [error, setError] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [ready, setReady] = useState(false);
   const [start, setStart] = useState(true);
-
-  // var CancelToken = axios.CancelToken;
-  // var cancel;
-  // const [cancelToken, setCancelToken] = useState();
-  const makeFetch = (url, abortCont) => {
-    let unmount = false;
-    fetch(url, {
-      signal: abortCont.signal,
-      method: "GET",
-    })
-      .then((res) => {
-        // console.log(res);
-        if (!unmount) {
-          return res.json();
-        }
-      })
-      .then((data) => {
-        // console.log(data);
-        setMovie(data);
-      })
-      .catch((err) => {
-        console.log(err.name);
-        if (error.name === "AbortError") {
-          console.log("Fetch aborted");
-        } else {
-          // setError(true);
-          console.log("Aint it");
-        }
-      });
-  };
+  const [trigger, setTrigger] = useState(0);
 
   useEffect(() => {
-    let cancelToken;
-    if (movie != undefined) {
+    if (movie !== undefined) {
       setPending(false);
     }
     const abortCont = new AbortController();
-    if (typeof cancelToken != typeof undefined) {
-      cancelToken.cancel("Canceling the previous req");
-    }
 
-    cancelToken = axios.CancelToken.source();
-
-    // if (cancel != undefined) {
-    //   cancel();
-    // }
     axios
-      .get(`http://localhost:5000/reviews/movie/${imdbId}`, {
-        cancelToken: cancelToken.token,
-        // cancelToken: new CancelToken(function executor(c) {
-        //   // An executor function receives a cancel function as a parameter
-        //   cancel = c;
-        // }),
-      })
+      .get(`http://localhost:5000/reviews/movie/${imdbId}`, {})
       .then((response) => {
-        // console.log(response);
-        // if (cancel != undefined) {
-        //   console.log("Error in fetching");
-        // } else {
         setReviews(response.data);
         setReady(true);
-        // }
       })
       .catch((error) => {
         console.log(error);
       });
-
-    // fetch(`http://localhost:5000/reviews/movie/${imdbId}`, {
-    //   signal: abortCont.signal,
-    //   method: "GET",
-    // })
-    //   .then((response) => {
-    //     // console.log(response.data);
-    //     setReviews(response.data);
-    //     setReady(true);
-    //   })
-    //   .catch((error) => {
-    //     // console.log(error);
-    //   });
-
-    // makeFetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`, abortCont);
 
     if (start) {
       fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=ba273f35`, {
@@ -103,32 +37,25 @@ const Movie = () => {
         method: "GET",
       })
         .then((res) => {
-          // console.log(res);
-
           return res.json();
         })
         .then((data) => {
-          // console.log(data);
           setMovie(data);
         })
         .catch((err) => {
           console.log(err.name);
-          if (err.name == "AbortError") {
+          if (err.name === "AbortError") {
             console.log("Fetch aborted");
-          } else {
-            setError(true);
-            // console.log("Aint it");
           }
         });
       setStart(false);
     }
 
     return () => abortCont.abort();
-  }, [movie]);
+  }, [movie, trigger]);
 
   return (
     <>
-      {/* {console.log(movie)} */}
       <Navbar back={true} />
       <Container>
         <Row className="justify-content-center">
@@ -140,7 +67,11 @@ const Movie = () => {
           <div id="details">
             <Row className="justify-content-center" id="allDetails">
               <Col className="d-flex justify-content-center">
-                <img id="detailPoster" src={movie.Poster}></img>
+                <img
+                  id="detailPoster"
+                  src={movie.Poster}
+                  alt="Detailed Poster"
+                ></img>
               </Col>
               <Col id="movieInfo">
                 <p>
@@ -179,7 +110,12 @@ const Movie = () => {
             Loading
           </h1>
         )}
-        {!pending && <CreateReview imdbId={imdbId} />}
+        {!pending && (
+          <CreateReview
+            imdbId={imdbId}
+            newReview={(total) => setTrigger(total)}
+          />
+        )}
 
         {(ready && !pending && (
           <div id="allReviews">

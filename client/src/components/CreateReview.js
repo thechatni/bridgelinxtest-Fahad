@@ -8,38 +8,35 @@ const CreateReview = (props) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState(3);
   const [description, setDescription] = useState("");
-  const [ratingError, setRatingError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (isNaN(parseInt(number))) {
-      setRatingError(true);
-    } else {
-      setRatingError(false);
+    const review = {
+      name: name,
+      number: parseInt(number),
+      description: description,
+      imdbId: props.imdbId,
+    };
 
-      const review = {
-        name: name,
-        number: parseInt(number),
-        description: description,
-        imdbId: props.imdbId,
-      };
+    axios.post("http://localhost:5000/reviews/add", review).then(
+      (res) => {
+        // console.log(res.data);
+        props.newReview(res.data.length);
+      }
 
-      axios.post("http://localhost:5000/reviews/add", review).then(
-        (res) => console.log(res.data)
-        // props.getAdded(true)
-      );
+      // props.getAdded(true)
+    );
 
-      setName("");
-      setNumber(0);
-      setDescription("");
+    setName("");
+    setNumber(0);
+    setDescription("");
 
-      window.scroll({
-        bottom: 0,
-        left: 0,
-        behavior: "smooth",
-      });
-    }
+    window.scroll({
+      bottom: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   return (

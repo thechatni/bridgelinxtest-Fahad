@@ -21,14 +21,12 @@ const Navbr = (props) => {
             </div>
           )) || <h2 id="mainLogo">Bridgelinx React Test</h2>}
         </Navbar.Brand>
-
-        <Navbar.Toggle />
-        <Navbar.Collapse id="coll">
-          <Nav id="barItems">
+        <Nav id="barItems">
+          <div id="coll">
             <Link to="/">Home</Link>
             <Link to="/contact">About</Link>
-          </Nav>
-        </Navbar.Collapse>
+          </div>
+        </Nav>
       </Navbar>
     </div>
   );

@@ -5,14 +5,13 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Nav-bar";
 
 const Home = () => {
-  const [movies, setMovies] = useState([1, 2, 3]);
   const [page, setPage] = useState(1);
   const [cur, setCur] = useState(1);
   const [pending, setPending] = useState(true);
   const [total, setTotal] = useState();
   const [input, setInput] = useState("");
   const [data, setData] = useState();
-  const [start, setStart] = useState(true);
+
   const [search, setSearch] = useState("Avengers");
   const [error, setError] = useState(false);
   const [pageNumbers, setPageNumbers] = useState([]);
@@ -35,14 +34,13 @@ const Home = () => {
 
   const paginate = () => {
     var arr = [];
-    console.log(total);
+
     for (let i = 1; i <= total; i++) {
       arr[i - 1] = i;
     }
     setPageNumbers(arr);
   };
   const makeFetch = (url, abortCont) => {
-    console.log(page);
     let unmount = false;
     fetch(url, {
       signal: abortCont.signal,
@@ -66,11 +64,10 @@ const Home = () => {
           setPending(false);
         }
       });
-    setStart(false);
   };
 
   useEffect(() => {
-    if (total != undefined) {
+    if (total !== undefined) {
       paginate();
     }
 
@@ -153,7 +150,7 @@ const Home = () => {
 
             {!pending &&
               !error &&
-              data != undefined &&
+              data !== undefined &&
               data.map((movie) => (
                 <Col
                   className="col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center"
@@ -162,8 +159,10 @@ const Home = () => {
                   <div id="movie">
                     <Link to={`/movie/${movie.imdbID}`}>
                       {(movie.Poster === "N/A" && (
-                        <img id="poster" src="noimage.png"></img>
-                      )) || <img id="poster" src={movie.Poster}></img>}
+                        <img id="poster" src="noimage.png" alt="poster"></img>
+                      )) || (
+                        <img id="poster" src={movie.Poster} alt="poster"></img>
+                      )}
 
                       <p>{movie.Title}</p>
                     </Link>
@@ -171,7 +170,7 @@ const Home = () => {
                 </Col>
               ))}
           </Row>
-          {!pending && !error && data != undefined && (
+          {!pending && !error && data !== undefined && (
             <Row className="justify-content-center" id="pagination">
               <Col className="col-12 d-flex justify-content-center">
                 {page > 1 && (

@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Movie from "./pages/Movie";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import { RecoilRoot } from "recoil";
 
 function App() {
   return (
